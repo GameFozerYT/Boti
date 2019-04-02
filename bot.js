@@ -482,7 +482,7 @@ message.channel.send('**هلا فيك**');
 
 
   client.on("message", message => {
-    if (message.content === "السلام عليكم ") {
+    if (message.content === "السلام عليكم") {
    
 message.channel.send('**وعليكم السلام**');
 
