@@ -341,7 +341,6 @@ client.on('guildMemberAdd', member => {
     .setColor('RANDOM')
     .setImage(member.user.avatarURL)
 var channel =member.guild.channels.find('name', 'welcome')
-var channel =member.guild.channels.find('name', '𝓦𝓔𝓛𝓒𝓞𝓜𝓔')
 if (!channel) return;
 channel.send({embed : embed});
 });
@@ -468,6 +467,24 @@ message.channel.send("`Error`:" + Julian)
     if (message.content === "+DS") {
    
 message.channel.send('**  `Texo#3834`  **');
+
+   }
+   });
+
+
+  client.on("message", message => {
+    if (message.content === "هلا") {
+   
+message.channel.send('**هلا فيك**');
+
+   }
+   });
+
+
+  client.on("message", message => {
+    if (message.content === "السلام عليكم ") {
+   
+message.channel.send('**وعليكم السلام**');
 
    }
    });
