@@ -489,14 +489,4 @@ message.channel.send('**وعليكم السلام**');
    }
    });
 
-
-  client.on("message", message => {
-    if (message.content === "من افضل صديق عندك يا بوت") {
-   
-message.channel.send('**mochamadpro**');
-
-   }
-   });
-
-
 client.login(process.env.BOT_TOKEN);// لا تغير فيها شيء
