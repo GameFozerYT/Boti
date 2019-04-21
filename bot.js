@@ -2,7 +2,6 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const fs = require("fs");
 const moment = require("moment");
-
 var prefix = "+";
 client.on('ready', () => {
    console.log(`----------------`);
@@ -208,6 +207,18 @@ client.on('message', msg => {
          .setColor("#00FF00")
          .setThumbnail(message.author.avatarURL)
          .setDescription(`**Help|هيلب
+  
+   **وصف عن البوت**
+               ItzLG|BOt 
+  هدا بوت يتمز بكتر الاوامر الجميلة التي تساعد في سيرفر كما توجد فيه خاصية الترحيب 
+                                                               بالصورة بطريقة جميلة
+                                                 
+                                   
+      -🚀سرعه اتصال ممتازه
+      -😎سهل الاستخدام
+      -⚠ صيانه كل يوم
+      -💵 مجاني بل كامل 
+  
   ---------------------------------
                 اوامر ادارية
   ---------------------------------
@@ -225,6 +236,10 @@ client.on('message', msg => {
  
        +unban [name]|لفك البان من عضو الي طرته
 
+       +mutechannel |      لقفل الشات
+
+     +unmutechannel |لفتح الشات
+
     +embed RED test | كود امبد 
    ---------------------------------
                  اوامر عامية
@@ -235,9 +250,9 @@ client.on('message', msg => {
 
             +DS |لمعرفة مصصم البوت 
 
-       +server  |لمعرفة معلومات حو السيرفر 
+       +server  |لمعرفة معلومات حول السيرفر 
 
-          +bot |لمعرفة معلومات حو البوت
+          +bot  |لمعرفة معلومات حول البوت
        ** `)
    message.author.sendEmbed(embed)
    
@@ -246,6 +261,36 @@ message.channel.send('**:white_check_mark: تم الارسال في الخاص  
    }
    });
 
+
+client.on('message', message => {
+
+       if(message.content === prefix + "+mutechannel") {
+                           if(!message.channel.guild) return message.reply('** This command only for servers**');
+
+   if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply(' **__ليس لديك صلاحيات__**');
+              message.channel.overwritePermissions(message.guild.id, {
+            SEND_MESSAGES: false
+
+              }).then(() => {
+                  message.reply("**__تم تقفيل الشات__ :white_check_mark: **")
+              });
+                }
+//viper
+    if(message.content === prefix + "+unmutechannel") {
+                        if(!message.channel.guild) return message.reply('** This command only for servers**');
+
+   if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('**__ليس لديك صلاحيات__**');
+              message.channel.overwritePermissions(message.guild.id, {
+            SEND_MESSAGES: true
+
+              }).then(() => {
+                  message.reply("**__تم فتح الشات__:white_check_mark:**")
+              });
+                }
+                
+         
+       
+});
 
 
 client.on('message', msg => {
@@ -290,7 +335,30 @@ client.on("guildMemberAdd", member => {
     }
   });
   
-  
+
+client.on('message', message => {
+  var prefix = "+";
+  if (message.author.bot) return;
+  if (!message.content.startsWith(prefix)) return;
+
+  let command = message.content.split(" ")[0];
+  command = command.slice(prefix.length);
+  let args = message.content.split(" ").slice(1);
+  if (command == "kick") {
+      if(!message.member.hasPermission('KICK_MEMBERS')) return message.reply('You Dont Have **KICK_MEMBERS** Permission!');
+        var member= message.mentions.members.first();
+        member.kick().then((member) => {
+            message.channel.send(member.displayName + " Kicked From " + message.guild.name);
+            message.channel.send("By: " + "<@" + message.author.id + ">")
+            message.channel.sendMessage(`تم حفظ السبب وستتم مراجعته من قبل الأونر`)
+client.channels.get(`ID Chat admin`).sendMessage("** تم طرد هذا الشخص من قبل " + message.guild.owner + " سبب مذكور **" + args.join("  "))
+        }).catch(() => {
+            message.channel.send(`:x: I cant kick this member`);
+        });
+    }
+});
+
+
   client.on('message', message => {
  if (message.content.toLowerCase() === prefix + "move all") {
      message.delete(4000)
@@ -443,6 +511,22 @@ client.on('message',message =>{
       })
 
 
+client.on('guildMemberRemove', member => {
+    var embed = new Discord.RichEmbed()
+    .setAuthor(member.user.username, member.user.avatarURL)
+    .setThumbnail(member.user.avatarURL)
+    .setTitle(`خرج عضو`)
+    .setDescription(`الى اللقاء...`)
+    .addField(':bust_in_silhouette:   تبقي',`**[ ${member.guild.memberCount} ]**`,true)
+    .setColor('RED')
+    .setFooter(`The King Bot`, '')
+
+var channel =member.guild.channels.find('name', 'wlc')
+if (!channel) return;
+channel.send({embed : embed});
+});
+
+
 client.on("message", message => {
   var prefix = "+";
   if(message.content.startsWith(prefix + "embed")) {
@@ -488,5 +572,6 @@ message.channel.send('**وعليكم السلام**');
 
    }
    });
+
 
 client.login(process.env.BOT_TOKEN);// لا تغير فيها شيء
