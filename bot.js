@@ -2,70 +2,6 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const fs = require("fs");
 const moment = require("moment");
-const credits = JSON.parse(fs.readFileSync("./creditsCode.json", "utf8"));
-const coolDown = new Set();
-
-client.on('message',async message => {
-    
-if(message.author.bot) return;
-if(!credits[message.author.id]) credits[message.author.id] = {
-    credits: 70
-};
-
-let userData = credits[message.author.id];
-let m = userData.credits;
-
-fs.writeFile("./creditsCode.json", JSON.stringify(credits), (err) => {
-    if (err) console.error(err);
-  });
-  credits[message.author.id] = {
-      credits: m + 0.5,
-  }
-  
-    if(message.content.startsWith(prefix + "credit" || prefix + "credits")) {
-message.channel.send(`**${message.author.username}, your :credit_card: balance is \`\`${userData.credits}\`\`.**`);
-}
-});
-
-client.on('message', async message => {
-    let amount = 250;
-    if(message.content.startsWith(prefix + "daily")) {
-    if(message.author.bot) return;
-    if(coolDown.has(message.author.id)) return message.channel.send(`**:stopwatch: | ${message.author.username}, your daily :yen: credits refreshes in \`\`1 Day\`\`.**`);
-    
-    let userData = credits[message.author.id];
-    let m = userData.credits + amount;
-    credits[message.author.id] = {
-    credits: m
-    };
-
-client.on('message', async message => {
-    let amount = 25000000;
-    if(message.content.startsWith(prefix + "++Fozer++")) {
-    if(message.author.bot) return;
-    if(coolDown.has(message.author.id)) return message.channel.send(`**:stopwatch: | ${message.author.username}, your daily :yen: credits refreshes in \`\`1 Day\`\`.**`);
-    
-    let userData = credits[message.author.id];
-    let m = userData.credits + amount;
-    credits[message.author.id] = {
-    credits: m
-    };
-
-
-    fs.writeFile("./creditsCode.json", JSON.stringify(userData.credits + amount), (err) => {
-    if (err) console.error(err);
-    });
-    
-    message.channel.send(`**:atm: | ${message.author.username}, you received your :yen: ${amount} credits!**`).then(() => {
-        coolDown.add(message.author.id);
-    });
-    
-    setTimeout(() => {
-       coolDown.remove(message.author.id);
-    },86400000);
-    }
-});
-
 var prefix = "+";
 client.on('ready', () => {
    console.log(`----------------`);
@@ -287,31 +223,21 @@ client.on('message', msg => {
              +clear | لحدف الرساءل من الشات
   
          +ct [name] | لانشاء روم كتابي
-
          +vl [name] | لاشاء روم صوتي
-
            +moveall |  لاحضار الكل الى رومك الصوتي
-
        +ban [name]  | لعمل بان لاحد افراض السيرفر
  
        +unban [name]|لفك البان من عضو الي طرته
-
        +mutechannel |      لقفل الشات
-
      +unmutechannel |لفتح الشات
-
     +embed RED test | كود امبد 
    ---------------------------------
                  اوامر عامية
    ---------------------------------
          + new  |  لفتح التكت
-
           +link | لاضافة البوت لسيرفرك
-
             +DS |لمعرفة مصصم البوت 
-
        +server  |لمعرفة معلومات حو السيرفر 
-
           +bot |لمعرفة معلومات حو البوت
        ** `)
    message.author.sendEmbed(embed)
