@@ -553,4 +553,32 @@ client.on('message', message => {
 });
 
 
+﻿client.on("message", message => {
+if(message.content.startsWith(prefix + `contact`)){
+if(message.author.bot || message.channel.type == 'dm') return;
+let args = message.content.split(" ").slice(1);
+let msg = args.join(' ');
+let dev = client.users.get(""); //Your id
+if(!args) return message.reply("يجب كتابة الرسالة");
+dev.send(`• | User: **${message.author.tag}**\n\n• | Message: **${msg}**`).then(() =>{
+message.channel.send(`Your message has been successfully delivered to the bot owner`)
+}).catch(console.error);
+}
+});
+
+
+client.on('message', message => { 
+    const mm = message.mentions.members.first() || message.member;
+    if(message.content.startsWith(prefix + "avatar")){
+        const embed = new Discord.RichEmbed()
+        .setAuthor(mm.user.tag, mm.user.avatarURL)
+        .setTitle("Avatar Link")
+        .setURL(mm.user.avatarURL)
+        .setImage(mm.user.avatarURL)
+        .setFooter(`Requested By : ${message.author.tag}`, message.author.avatarURL)
+        message.channel.send(embed);
+    }
+});
+
+
 client.login(process.env.BOT_TOKEN);// لا تغير فيها شيء
