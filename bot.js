@@ -514,7 +514,7 @@ message.channel.send("`Error`:" + Julian)
   client.on("message", message => {
     if (message.content === "+DS") {
    
-message.channel.send('**  `Texo#3834`  **');
+message.channel.send('**  `ItzTexo`  **');
 
    }
    });
